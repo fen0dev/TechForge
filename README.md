@@ -104,7 +104,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-TechnoForged ApS - [hello@technoforged.com](mailto:hello@technoforged.com)
+TechnoForged Digital ApS - [hello@technoforged.com](mailto:hello@technoforged.com)
 
 Project Link: [https://github.com/fen0dev/TechnoForged](https://github.com/fen0dev/TechnoForged)
 
