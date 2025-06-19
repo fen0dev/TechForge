@@ -233,3 +233,119 @@ function updateOnScroll() {
 }
 
 window.addEventListener('scroll', requestTick);
+
+// Mobile menu toggle
+function initMobileMenu() {
+    // Check if menu toggle already exists
+    let menuToggle = document.querySelector('.menu-toggle');
+    
+    // Create hamburger menu button if it doesn't exist and we're on mobile
+    if (!menuToggle && window.innerWidth <= 768) {
+        menuToggle = document.createElement('button');
+        menuToggle.className = 'menu-toggle';
+        menuToggle.innerHTML = '<span></span><span></span><span></span>';
+        menuToggle.setAttribute('aria-label', 'Toggle navigation menu');
+        document.querySelector('header').appendChild(menuToggle);
+    }
+    
+    // Remove menu toggle if we're on desktop
+    if (menuToggle && window.innerWidth > 768) {
+        menuToggle.remove();
+        document.querySelector('.nav-links').classList.remove('active');
+        document.body.style.overflow = '';
+        return;
+    }
+    
+    // If no menu toggle exists, exit
+    if (!menuToggle) return;
+    
+    const navLinks = document.querySelector('.nav-links');
+    
+    // Remove existing listeners to prevent duplicates
+    const newMenuToggle = menuToggle.cloneNode(true);
+    menuToggle.parentNode.replaceChild(newMenuToggle, menuToggle);
+    menuToggle = newMenuToggle;
+    
+    // Toggle menu
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    // Close menu when clicking links
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!menuToggle.contains(e.target) && !navLinks.contains(e.target) && navLinks.classList.contains('active')) {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
+// Handle resize events
+let resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        initMobileMenu();
+    }, 250);
+});
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', initMobileMenu);
+
+// disable hover effects on touch devices
+function isTouchDevice() {
+    return (('ontouchstart' in window) ||
+    (navigator.maxTouchPoints > 0) ||
+    (navigator.msMaxTouchPoints > 0));
+}
+
+if (isTouchDevice()) {
+    document.body.classList.add('touch-device');
+
+    // remove tilt effect on portfolio items for touch devices
+    portfolioItems.forEach(item => {
+        item.removeEventListener('mousemove', () => {});
+        item.removeEventListener('mouseleave', () => {});
+    });
+
+     // Remove magnetic effect on service cards for touch devices
+    serviceCards.forEach(card => {
+        card.removeEventListener('mousemove', () => {});
+        card.removeEventListener('mouseleave', () => {});
+    });
+}
+
+// improve scroll performance on mobile
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+    if (!scrollTimeout) {
+        window.requestAnimationFrame(() => {
+            // Your scroll handling code here
+            scrollTimeout = null;
+        });
+        scrollTimeout = setTimeout(() => scrollTimeout = null, 100);
+    }
+}, { passive: true });
+
+// add touch feedback
+document.querySelectorAll('.btn, .service-card, .portfolio-item').forEach(element => {
+    element.addEventListener('touchstart', function() {
+        this.style.transform = 'scale(0.98)';
+    });
+
+    element.addEventListener('touchend', function() {
+        this.style.transform = '';
+    });
+});
