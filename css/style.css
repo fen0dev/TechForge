@@ -973,6 +973,76 @@ footer {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: pulse 1.5s ease-in-out infinite;
+    margin-bottom: 30px;
+}
+
+.loader-logo img {
+    width: 80px;
+    height: 80px;
+    animation: logoAnimate 2s ease-in-out infinite;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.2s ease;
+}
+
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(175deg, var(--accent-primary) 20%, var(--accent-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.3s ease;
+} 
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.logo:hover img {
+    transform: scale(1.1) rotate(-5deg);
+    filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.3));
+}
+
+header.scrolled .logo img {
+    width: 30px;
+    height: 30px;
+}
+
+header.scrolled .logo-text {
+    font-size: 1.2rem;
+}
+
+header.scrolled .logo {
+    gap: 8px;
+}
+
+@keyframes logoAnimate {
+    0%, 100% { 
+        transform: scale(1) rotate(0deg); 
+        opacity: 1; 
+    }
+    25% {
+        transform: scale(1.1) rotate(5deg);
+    }
+    50% { 
+        transform: scale(1.05) rotate(-5deg); 
+        opacity: 0.9; 
+    }
+    75% {
+        transform: scale(1.1) rotate(5deg);
+    }
 }
 
 @keyframes pulse {
