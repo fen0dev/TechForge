@@ -757,6 +757,18 @@ nav {
     transition: transform 0.5s ease;
 }
 
+/* For app screenshots, center them nicely */
+.portfolio-item:has(img[src*="qr-code-studio"]),
+.portfolio-item:has(img[src*="event-app"]) {
+    background: #1a1a1a;
+}
+
+.portfolio-item:has(img[src*="qr-code-studio"]) .portfolio-image,
+.portfolio-item:has(img[src*="event-app"]) .portfolio-image {
+    object-fit: contain;
+    padding: 20px;
+}
+
 .portfolio-item:hover .portfolio-image {
     transform: scale(1.1);
 }
@@ -785,6 +797,14 @@ nav {
 
 .portfolio-category {
     color: var(--accent-primary);
+    font-size: 0.9rem;
+}
+
+.website-badge {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 10px;
+    color: orange;
     font-size: 0.9rem;
 }
 
