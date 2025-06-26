@@ -804,15 +804,7 @@ nav {
     display: flex;
     justify-content: flex-end;
     padding: 0 10px;
-    color: orange;
-    font-size: 0.9rem;
-}
-
-.app-badge {
-    display: flex;
-    justify-content: flex-end;
-    padding: 0 10px;
-    color: rgb(0, 155, 155);
+    color: rgb(0, 184, 166);
     font-size: 0.9rem;
 }
 
