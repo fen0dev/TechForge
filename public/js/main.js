@@ -260,6 +260,9 @@ function initMobileMenu() {
     if (!menuToggle) return;
     
     const navLinks = document.querySelector('.nav-links');
+
+    // Remove hidden class on mobile to prevent conflicts
+    navLinks.classList.remove('hidden');
     
     // Remove existing listeners to prevent duplicates
     const newMenuToggle = menuToggle.cloneNode(true);
@@ -348,4 +351,29 @@ document.querySelectorAll('.btn, .service-card, .portfolio-item').forEach(elemen
     element.addEventListener('touchend', function() {
         this.style.transform = '';
     });
+});
+
+// <------- BUG FIXED ------>
+// This is a weird bug though! 
+// On the mobile the side bar doesn't show
+// if the user interacts with the website (scrolls back and forth, taps images, etc..) before toggling the menu side bar.
+// Instead, if the user initiates the side bar on appear, the bar will work and show seamlessly.
+// This is how I made it work:
+
+// - By ensuring that the hidden class from the side bar is removed on mobile devices
+if (window.innerHeight <= 768) {
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks) {
+        navLinks.classList.remove('hidden');
+    }
+}
+
+// - Also by removing it when orientation change since we have parallax effects
+window.addEventListener('orientationchange', () => {
+    if (window.innerHeight <= 768) {
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks) {
+            navLinks.classList.remove('hidden');
+        }
+    }
 });

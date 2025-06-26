@@ -349,28 +349,53 @@
         // Navigation hide/show on scroll with smooth animation
         let lastScrollTop = 0;
         const navLinks = document.querySelector('.nav-links');
-        const scrollThreshold = 50;
+        const scrollThreshold = 100;
 
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (Math.abs(currentScroll - lastScrollTop) > scrollThreshold) {
-                if (currentScroll > lastScrollTop && currentScroll > 100) {
-                    navLinks.classList.add('hidden');
-                } else {
-                    navLinks.classList.remove('hidden');
-                }
-                lastScrollTop = currentScroll;
+        // applies to desktops only
+        function handleNavScroll() {
+            if (window.innerWidth <= 768) {
+                navLinks.classList.remove('hidden');
+                return;
             }
-        }, false);
+
+            window.clearTimeout(isScrolling);
+            
+            isScrolling = setTimeout(() => {
+                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            
+                if (Math.abs(currentScroll - lastScrollTop) > scrollThreshold) {
+                    if (currentScroll > lastScrollTop && currentScroll > 100) {
+                        navLinks.classList.add('hidden');
+                    } else if (lastScrollTop - currentScroll > scrollThreshold || currentScroll < 100) {
+                        navLinks.classList.remove('hidden');
+                    }
+                    lastScrollTop = currentScroll;
+                }
+            }, scrollThreshold);
+        }
+
+        window.addEventListener('scroll', handleNavScroll, false);
 
         // Show navigation when mouse is near right edge
         document.addEventListener('mousemove', (e) => {
+            if (window.innerHeight <= 768) return;
+
             const mouseNearRightEdge = window.innerWidth - e.clientX < 100;
             if (mouseNearRightEdge) {
                 navLinks.classList.remove('hidden');
             }
         });
+
+        function checkMobile() {
+            if (window.innerHeight <= 768) {
+                navLinks.classList.remove('hidden');
+            }
+        }
+
+        // remove hidden class when resizing from desktop to mobile
+        window.addEventListener('resize', checkMobile);
+        window.addEventListener('orientationchange', checkMobile);
+        checkMobile();
 
         // Add parallax scrolling for sections
         const parallaxElements = document.querySelectorAll('.section-header, .hero-content');
