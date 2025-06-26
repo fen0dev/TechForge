@@ -808,6 +808,14 @@ nav {
     font-size: 0.9rem;
 }
 
+.app-badge {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 10px;
+    color: rgb(0, 155, 155);
+    font-size: 0.9rem;
+}
+
 /* CTA Section */
 .cta-section {
     padding: 120px 0;
