@@ -26,11 +26,34 @@ hoverElements.forEach(element => {
     });
 });
 
-// Loading Screen
+// Loading Screen with percentage
+const loaderPercentage = document.querySelector('.loader-percentage');
+let loadProgress = 0;
+
+// Simulate loading progress
+const loadInterval = setInterval(() => {
+    loadProgress += Math.random() * 35;
+    if (loadProgress > 100) loadProgress = 100;
+    
+    if (loaderPercentage) {
+        loaderPercentage.textContent = Math.floor(loadProgress) + '%';
+    }
+    
+    if (loadProgress >= 100) {
+        clearInterval(loadInterval);
+    }
+}, 200);
+
 window.addEventListener('load', () => {
+    // Complete the loading
+    loadProgress = 100;
+    if (loaderPercentage) {
+        loaderPercentage.textContent = '100%';
+    }
+    
     setTimeout(() => {
         document.getElementById('loader').classList.add('hidden');
-    }, 2000);
+    }, 500);
 });
 
 // Header Scroll Effect
